@@ -39,6 +39,14 @@ function getDeliveryFee(option) {
     return fee;
 }
 
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = {
+        calculateItemAmount,
+        calculateDiscount,
+        getDeliveryFee
+    };
+}
+
 if (typeof document !== "undefined") {
     const customerName = document.getElementById("customerName");
     const productCount = document.getElementById("productCount");
