@@ -20,8 +20,9 @@ function calculateDiscount(subtotal) {
 
 function getDeliveryFee(option) {
     let fee = 0;
+    option = Number(option);
 
-    switch (Number(option)) {
+    switch (option) {
         case 1:
             fee = 0;
             break;
@@ -33,6 +34,7 @@ function getDeliveryFee(option) {
             break;
         default:
             fee = 0;
+            break;
     }
 
     return fee;
@@ -80,25 +82,26 @@ if (typeof document !== "undefined") {
         }
     }
 
-    function updateProducts() {
+    productCount.addEventListener("input", function () {
         const count = Number(productCount.value);
 
         validationMessage.textContent = "";
         orderSummary.innerHTML = "";
 
-        if (
-            Number.isFinite(count) &&
-            count > 0 &&
-            Number.isInteger(count)
-        ) {
+        if (count > 0 && Number.isInteger(count)) {
             generateProductInputs(count);
         } else {
             productsContainer.innerHTML = "";
         }
-    }
+    });
 
-    productCount.addEventListener("input", updateProducts);
-    productCount.addEventListener("change", updateProducts);
+    productCount.addEventListener("change", function () {
+        const count = Number(productCount.value);
+
+        if (count > 0 && Number.isInteger(count)) {
+            generateProductInputs(count);
+        }
+    });
 
     calculateBtn.addEventListener("click", function () {
         validationMessage.textContent = "";
@@ -110,20 +113,14 @@ if (typeof document !== "undefined") {
         if (name === "") {
             validationMessage.textContent = "Customer Name is required.";
             return;
-        } else if (
-            !Number.isFinite(count) ||
-            count <= 0 ||
-            !Number.isInteger(count)
-        ) {
-            validationMessage.textContent =
-                "Number of Products must be a positive whole number.";
+        } else if (!Number.isFinite(count) || count <= 0 || !Number.isInteger(count)) {
+            validationMessage.textContent = "Number of Products must be a positive whole number.";
             return;
         }
 
         if (productsContainer.children.length !== count) {
             generateProductInputs(count);
-            validationMessage.textContent =
-                "Please enter the product information.";
+            validationMessage.textContent = "Please enter the product information.";
             return;
         }
 
@@ -131,18 +128,14 @@ if (typeof document !== "undefined") {
         let productDetails = "";
 
         for (let i = 0; i < count; i++) {
-            const productNameInput =
-                document.getElementById(`productName-${i}`);
+            const productName =
+                document.getElementById(`productName-${i}`).value.trim();
 
-            const productPriceInput =
-                document.getElementById(`productPrice-${i}`);
+            const price =
+                Number(document.getElementById(`productPrice-${i}`).value);
 
-            const productQuantityInput =
-                document.getElementById(`productQuantity-${i}`);
-
-            const productName = productNameInput.value.trim();
-            const price = Number(productPriceInput.value);
-            const quantity = Number(productQuantityInput.value);
+            const quantity =
+                Number(document.getElementById(`productQuantity-${i}`).value);
 
             if (productName === "") {
                 validationMessage.textContent =
@@ -165,9 +158,9 @@ if (typeof document !== "undefined") {
             productDetails += `
                 <div class="product-summary">
                     <strong>${i + 1}. ${productName}</strong>
-                    <p>Price: ₱${price.toFixed(2)}</p>
-                    <p>Quantity: ${quantity}</p>
-                    <p>Amount: ₱${itemAmount.toFixed(2)}</p>
+                    <p class="summary-item">Price: ₱${price.toFixed(2)}</p>
+                    <p class="summary-item">Quantity: ${quantity}</p>
+                    <p class="summary-item">Amount: ₱${itemAmount.toFixed(2)}</p>
                 </div>
             `;
         }
@@ -203,6 +196,7 @@ if (typeof document !== "undefined") {
                 break;
             default:
                 deliveryType = "Store Pickup";
+                break;
         }
 
         const finalAmount = subtotal - discount + deliveryFee;
@@ -210,19 +204,31 @@ if (typeof document !== "undefined") {
         orderSummary.innerHTML = `
             <h2>ORDER SUMMARY</h2>
 
-            <p><strong>Customer:</strong> ${name}</p>
+            <p class="summary-item">
+                <strong>Customer:</strong> ${name}
+            </p>
 
             ${productDetails}
 
-            <p><strong>Subtotal:</strong> ₱${subtotal.toFixed(2)}</p>
+            <p class="summary-item">
+                <strong>Subtotal:</strong> ₱${subtotal.toFixed(2)}
+            </p>
 
-            <p><strong>Discount Rate:</strong> ${discountRate}%</p>
+            <p class="summary-item">
+                <strong>Discount Rate:</strong> ${discountRate}%
+            </p>
 
-            <p><strong>Discount Amount:</strong> ₱${discount.toFixed(2)}</p>
+            <p class="summary-item">
+                <strong>Discount Amount:</strong> ₱${discount.toFixed(2)}
+            </p>
 
-            <p><strong>Delivery Type:</strong> ${deliveryType}</p>
+            <p class="summary-item">
+                <strong>Delivery Type:</strong> ${deliveryType}
+            </p>
 
-            <p><strong>Delivery Fee:</strong> ₱${deliveryFee.toFixed(2)}</p>
+            <p class="summary-item">
+                <strong>Delivery Fee:</strong> ₱${deliveryFee.toFixed(2)}
+            </p>
 
             <p class="final-amount">
                 Final Amount: ₱${finalAmount.toFixed(2)}
