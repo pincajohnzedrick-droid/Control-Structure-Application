@@ -3,31 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Store Checkout System</title>
-    <link rel="stylesheet" href="style.css">
+    <title>MINI STORE CHECKOUT SYSTEM</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            text-align: center;
+            color: #222;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .product {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .product h3 {
+            margin-top: 0;
+        }
+
+        #validationMessage {
+            color: red;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        #orderSummary {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .product-summary {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .summary-item {
+            margin: 8px 0;
+        }
+
+        .final-amount {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #333;
+            font-size: 20px;
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
 </head>
 
 <body>
 
     <div class="container">
+
         <h1>MINI STORE CHECKOUT SYSTEM</h1>
 
         <form id="checkoutForm">
 
             <label for="customerName">Customer Name</label>
-            <input
-                type="text"
-                id="customerName"
-                placeholder="Enter customer name"
-            >
+            <input type="text" id="customerName">
 
             <label for="productCount">Number of Products</label>
-            <input
-                type="number"
-                id="productCount"
-                min="1"
-                placeholder="Enter number of products"
-            >
+            <input type="number" id="productCount" min="1">
 
             <div id="productsContainer"></div>
 
@@ -47,8 +138,10 @@
         </form>
 
         <div id="orderSummary"></div>
+
     </div>
 
     <script src="script.js"></script>
+
 </body>
 </html>
